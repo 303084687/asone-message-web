@@ -24,7 +24,7 @@
       <div style="margin-top: 15px">
         <el-form :inline="true" :model="listQuery" size="small" label-width="140px">
           <el-form-item label="输入搜索：">
-            <el-input v-model="listQuery.templateId" class="input-width" placeholder="模板Id" clearable></el-input>
+            <el-input v-model="listQuery.templateName" class="input-width" placeholder="模板名称" clearable></el-input>
           </el-form-item>
           <el-form-item label="输入搜索：">
             <el-input v-model="listQuery.touser" class="input-width" placeholder="消息接收者openId" clearable></el-input>
@@ -135,7 +135,7 @@
   const defaultListQuery = {
     pageNum: 1,
     pageSize: 10,
-    templateId: "",
+    templateName: "",
     touser: "",
     //0成功1失败,默认2全部
     status: 2
