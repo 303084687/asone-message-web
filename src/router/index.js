@@ -40,7 +40,7 @@ export const asyncRouterMap = [
     component: Layout,
     redirect: '/wx/template',
     name: 'wx',
-    meta: {title: '微信消息推送', icon: 'ums'},
+    meta: {title: '微信消息推送', icon: 'table'},
     children: [
       {
         path: 'template',
@@ -52,6 +52,27 @@ export const asyncRouterMap = [
         path: 'wxlog',
         name: 'wxlog',
         component: () => import('@/views/wx/messageLog/index'),
+        meta: {title: '日志列表', icon: 'product-list'}
+      }
+    ]
+  },
+  {
+    path:'/email',
+    component: Layout,
+    redirect: '/email/template',
+    name: 'email',
+    meta: {title: '邮件配置', icon: 'sms'},
+    children: [
+      {
+        path: 'template',
+        name: 'template',
+        component: () => import('@/views/email/template/index'),
+        meta: {title: '模板列表', icon: 'order-setting'}
+      },
+      {
+        path: 'emaillog',
+        name: 'emaillog',
+        component: () => import('@/views/email/emailLog/index'),
         meta: {title: '日志列表', icon: 'product-list'}
       }
     ]
