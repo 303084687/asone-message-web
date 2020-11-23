@@ -45,7 +45,6 @@
     <el-card class="operate-container" shadow="never">
       <i class="el-icon-tickets"></i>
       <span>数据列表</span>
-      <el-button size="mini" class="btn-add" @click="handleAdd()" style="margin-left: 20px">添加</el-button>
     </el-card>
     <div class="table-container">
       <el-table ref="adminTable"
@@ -94,36 +93,28 @@
       :title="'微信推送日志详情'"
       :visible.sync="dialogVisible"
       width="40%">
-      <el-form :model="messageLog"
-               label-width="150px" size="small">
+      <div class="el-dialog-div">
+      <el-form :model="messageLog" size="small">
         <el-form-item label="模板Id：">
-          <el-input v-model="messageLog.templateId" style="width: 450px" disabled></el-input>
+          <template>{{messageLog.templateId}}</template>
         </el-form-item>
         <el-form-item label="模板名称：">
-          <el-input v-model="messageLog.templateName" style="width: 450px" disabled></el-input>
+          <template>{{messageLog.templateName}}</template>
         </el-form-item>
-        <el-form-item label="消息接收者openId：">
-          <el-input v-model="messageLog.touser" style="width: 450px" disabled></el-input>
+        <el-form-item label="接收者openId：">
+          <template>{{messageLog.touser}}</template>
         </el-form-item>
         <el-form-item label="发送状态：">
-          <el-radio-group v-model="messageLog.status">
-            <el-radio :label="0" disabled>成功</el-radio>
-            <el-radio :label="1" disabled>失败</el-radio>
-          </el-radio-group>
+          <template>{{messageLog.status==0?'成功':'失败'}}</template>
         </el-form-item>
         <el-form-item label="成功/失败原因：">
-          <el-input v-model="messageLog.message" style="width: 450px" disabled></el-input>
+          <template>{{messageLog.message}}</template>
         </el-form-item>
         <el-form-item label="推送参数：">
-          <el-input v-model="messageLog.content"
-                    type="textarea"
-                    :rows="10"
-                    style="width: 450px"
-                    disabled
-                    >
-          </el-input>
+         <template>{{messageLog.content}}</template>
         </el-form-item>
       </el-form>
+      </div>
     </el-dialog>
   </div>
 </template>
@@ -242,4 +233,10 @@
     }
   }
 </script>
-<style></style>
+<style>
+  .el-dialog-div{
+    height: 60vh;
+    margin-left: 25px;
+    overflow: auto;
+  }
+</style>

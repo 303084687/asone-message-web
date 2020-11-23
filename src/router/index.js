@@ -70,8 +70,8 @@ export const asyncRouterMap = [
         meta: {title: '模板列表', icon: 'order-setting'}
       },
       {
-        path: 'emaillog',
-        name: 'emaillog',
+        path: 'emailLog',
+        name: 'emailLog',
         component: () => import('@/views/email/emailLog/index'),
         meta: {title: '日志列表', icon: 'product-list'}
       }

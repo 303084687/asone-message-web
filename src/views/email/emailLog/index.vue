@@ -1,4 +1,4 @@
-<!--微信消息推送日志-->
+<!--邮件推送日志-->
 <template> 
   <div class="app-container">
     <!--模糊搜索-->
@@ -27,7 +27,10 @@
             <el-input v-model="listQuery.templateName" class="input-width" placeholder="模板名称" clearable></el-input>
           </el-form-item>
           <el-form-item label="输入搜索：">
-            <el-input v-model="listQuery.touser" class="input-width" placeholder="消息接收者openId" clearable></el-input>
+            <el-input v-model="listQuery.subject" class="input-width" placeholder="邮件主题" clearable></el-input>
+          </el-form-item>
+           <el-form-item label="输入搜索：">
+            <el-input v-model="listQuery.receiveMail" class="input-width" placeholder="邮件接收人" clearable></el-input>
           </el-form-item>
           <el-form-item label="消息状态：">
             <el-select v-model="listQuery.status" placeholder="全部" clearable class="input-width">
@@ -45,7 +48,6 @@
     <el-card class="operate-container" shadow="never">
       <i class="el-icon-tickets"></i>
       <span>数据列表</span>
-      <el-button size="mini" class="btn-add" @click="handleAdd()" style="margin-left: 20px">添加</el-button>
     </el-card>
     <div class="table-container">
       <el-table ref="adminTable"
@@ -58,8 +60,11 @@
         <el-table-column label="模板名称" align="center">
           <template slot-scope="scope">{{scope.row.templateName}}</template>
         </el-table-column>
-        <el-table-column label="消息接收者openId" align="center">
-          <template slot-scope="scope">{{scope.row.touser}}</template>
+        <el-table-column label="邮件主题" align="center">
+          <template slot-scope="scope">{{scope.row.subject}}</template>
+        </el-table-column>
+        <el-table-column label="邮件接收人" align="center">
+          <template slot-scope="scope">{{scope.row.receiveMail}}</template>
         </el-table-column>
         <el-table-column label="发送状态" align="center">
           <template slot-scope="scope">{{scope.row.status==0?'成功':'失败'}}</template>
@@ -91,52 +96,48 @@
       </el-pagination>
     </div>
     <el-dialog
-      :title="'微信推送日志详情'"
+      :title="'邮件发送日志详情'"
       :visible.sync="dialogVisible"
       width="40%">
-      <el-form :model="messageLog"
-               label-width="150px" size="small">
-        <el-form-item label="模板Id：">
-          <el-input v-model="messageLog.templateId" style="width: 450px" disabled></el-input>
-        </el-form-item>
-        <el-form-item label="模板名称：">
-          <el-input v-model="messageLog.templateName" style="width: 450px" disabled></el-input>
-        </el-form-item>
-        <el-form-item label="消息接收者openId：">
-          <el-input v-model="messageLog.touser" style="width: 450px" disabled></el-input>
-        </el-form-item>
-        <el-form-item label="发送状态：">
-          <el-radio-group v-model="messageLog.status">
-            <el-radio :label="0" disabled>成功</el-radio>
-            <el-radio :label="1" disabled>失败</el-radio>
-          </el-radio-group>
-        </el-form-item>
-        <el-form-item label="成功/失败原因：">
-          <el-input v-model="messageLog.message" style="width: 450px" disabled></el-input>
-        </el-form-item>
-        <el-form-item label="推送参数：">
-          <el-input v-model="messageLog.content"
-                    type="textarea"
-                    :rows="10"
-                    style="width: 450px"
-                    disabled
-                    >
-          </el-input>
-        </el-form-item>
-      </el-form>
+      <div class="el-dialog-div">
+        <el-form :model="messageLog" size="small">
+          <el-form-item label="模板Id：">
+            <template>{{messageLog.templateId}}</template>
+          </el-form-item>
+          <el-form-item label="模板名称：">
+            <template>{{messageLog.templateName}}</template>
+          </el-form-item>
+          <el-form-item label="邮件主题：">
+            <template>{{messageLog.subject}}</template>
+          </el-form-item>
+          <el-form-item label="发送状态：">
+            <template>{{messageLog.status==0?'成功':'失败'}}</template>
+          </el-form-item>
+          <el-form-item label="成功/失败原因：">
+            <template>{{messageLog.message}}</template>
+          </el-form-item>
+          <el-form-item label="邮件接收人：">
+            <template>{{messageLog.receiveMail}}</template>
+          </el-form-item>
+          <el-form-item label="邮件内容：">
+            <template><p v-html='messageLog.content'></p></template>
+          </el-form-item>
+        </el-form>
+      </div>
     </el-dialog>
   </div>
 </template>
 <script>
    //接口地址
-  import {queryLogList} from '@/api/wxMessage';
+  import {queryLogList} from '@/api/email';
   import {formatDate} from '@/utils/date';
   //默认查询参数
   const defaultListQuery = {
     pageNum: 1,
     pageSize: 10,
     templateName: "",
-    touser: "",
+    subject:"",
+    receiveMail: "",
     //0成功1失败,默认2全部
     status: 2
   };
@@ -147,9 +148,11 @@
     templateId: '',
     //模板名称
     templateName: '',
-    //消息接收者
-    touser: '',
-    //发送参数
+    //邮件主题
+    subject: '',
+    //邮件接收者
+    receiveMail:'',
+    //发送内容
     content: '',
     //发送状态0成功1失败
     status: null,
@@ -242,4 +245,10 @@
     }
   }
 </script>
-<style></style>
+<style>
+  .el-dialog-div{
+    height: 65vh;
+    margin-left: 25px;
+    overflow: auto;
+  }
+</style>

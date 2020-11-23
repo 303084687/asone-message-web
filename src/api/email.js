@@ -39,7 +39,7 @@ export function deleteTemplate(id) {
 //邮件日志列表
 export function queryLogList(params) {
   return request({
-    url: '/email/log/list',
+    url: '/emailLog/list',
     method: 'get',
     params: params
   })
